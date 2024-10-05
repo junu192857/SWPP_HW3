@@ -10,16 +10,22 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
 
+    private bool rightMoveInit;
+    private bool leftMoveInit;
+
     private bool rightMove;
     private bool leftMove;
 
     private Quaternion lookLeft = Quaternion.Euler(0, -90, 0);
     private Quaternion lookRight = Quaternion.Euler(0, 90, 0);
 
+    public float moveSpeed = 5f;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        Physics.gravity *= 3;
     }
 
     // Reset Maps and Character when restart game.
@@ -35,16 +41,24 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && onGround) Jump();
-        
+        if (Input.GetKeyDown(KeyCode.RightArrow)) rightMoveInit = true;
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) leftMoveInit = true;
+
         if (Input.GetKey(KeyCode.RightArrow)) rightMove = true;
         else rightMove = false;
         if (Input.GetKey(KeyCode.LeftArrow)) leftMove = true;
         else leftMove = false;
+
+        Look(leftMoveInit, rightMoveInit);
+        Move(leftMove, rightMove);
+
+        rightMoveInit = false;
+        leftMoveInit = false;
     }
 
     private void Jump() {
         onGround = false;
-        rb.AddForce(rb.mass * 500 * Vector3.up);
+        rb.AddForce(rb.mass * 1000 * Vector3.up);
         animator.SetBool("Jump_b", true);
         
     }
@@ -65,11 +79,8 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     private void Move(bool left, bool right) {
-        if (left && !right)
-        {
-            transform.rotation = lookLeft;
-        }
-        else if (right && !left) transform.rotation = lookRight;
+        if (left && !right) transform.Translate(Vector3.left * moveSpeed * Time.deltaTime, Space.World);
+        else if (right && !left) transform.Translate(Vector3.right * moveSpeed * Time.deltaTime, Space.World);
     }
 
 }
