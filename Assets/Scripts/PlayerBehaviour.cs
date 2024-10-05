@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Quaternion lookRight = Quaternion.Euler(0, 90, 0);
 
     public float moveSpeed = 5f;
+    public float jumpForce = 700;
 
     void Start()
     {
@@ -58,16 +59,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Jump() {
         onGround = false;
-        rb.AddForce(rb.mass * 1000 * Vector3.up);
+        rb.AddForce(rb.mass * jumpForce * Vector3.up);
         animator.SetBool("Jump_b", true);
         
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if (collision == ¹Ù´Ú)
-        onGround = true;
-        animator.SetBool("Jump_b", false);
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            onGround = true;
+            animator.SetBool("Jump_b", false);
+        }
     }
 
     private void Look(bool left, bool right) {
