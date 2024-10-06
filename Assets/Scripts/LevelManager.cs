@@ -36,6 +36,11 @@ public class LevelManager : MonoBehaviour
         Initialize(1);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) Initialize(curLevel);
+    }
+
     public void Initialize(int level) {
         curLevel = level;
         player.Initialize(level);
@@ -47,6 +52,7 @@ public class LevelManager : MonoBehaviour
         switch (level) {
             case 1:
                 money = 0;
+                um.UpdateMoney(money, level1MaxMoney);
                 foreach (GameObject money in moneys) {
                     money.SetActive(true);
                     foreach (ParticleSystem particle in FindObjectsOfType<ParticleSystem>()) {
