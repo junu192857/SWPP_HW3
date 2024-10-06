@@ -2020,6 +2020,7 @@ Transform:
   - {fileID: 1986035941}
   - {fileID: 206902191}
   - {fileID: 970952787}
+  - {fileID: 1473876639}
   - {fileID: 1969000880}
   - {fileID: 1620709454}
   - {fileID: 1414159678}
@@ -4760,6 +4761,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7434387, y: 0.1282115, z: 0.73703384}
   m_Center: {x: -0.009403229, y: 0.09058261, z: 0.016765594}
+--- !u!1 &1473876638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1473876639}
+  - component: {fileID: 1473876640}
+  m_Layer: 0
+  m_Name: MoveToLevel2
+  m_TagString: MoveLevel
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1473876639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473876638}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.992393, y: 1.1350021, z: -11.748955}
+  m_LocalScale: {x: 0.7493775, y: 4.36296, z: 1.7282654}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 759411716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1473876640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473876638}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0991546, y: 1, z: 1}
+  m_Center: {x: 0.4504227, y: 0, z: 0}
 --- !u!1 &1490135906
 GameObject:
   m_ObjectHideFlags: 0
@@ -5656,6 +5710,7 @@ MonoBehaviour:
   curLevel: 0
   money: 0
   gate: {fileID: 970952783}
+  gatePos: {x: 0, y: 0, z: 0}
   moneyParticle: {fileID: 2184612376268763248, guid: 307229a5540374aae98859caad2128a3, type: 3}
   player: {fileID: 1539792499}
 --- !u!4 &1884304163

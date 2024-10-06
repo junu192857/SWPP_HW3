@@ -11,6 +11,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
 
+    private int Level => LevelManager.instance.curLevel;
+
     private bool rightMoveInit;
     private bool leftMoveInit;
 
@@ -93,6 +95,9 @@ public class PlayerBehaviour : MonoBehaviour
             LevelManager.instance.AddMoney(money.transform.position);
             money.SetActive(false);
         }
+        else if (other.gameObject.CompareTag("MoveLevel")) {
+            LevelManager.instance.Initialize(Level + 1);
+        }
     }
 
     private void Look(bool left, bool right) {
@@ -105,13 +110,14 @@ public class PlayerBehaviour : MonoBehaviour
             transform.rotation = lookRight;
             animator.SetFloat("Speed_f", 1f);
         }
-        else animator.SetFloat("Speed_f", 0f);
+
     }
 
     private void Move(bool left, bool right) {
         
         if (left && !right) transform.Translate(Vector3.left * moveSpeed * Time.deltaTime, Space.World);
         else if (right && !left) transform.Translate(Vector3.right * moveSpeed * Time.deltaTime, Space.World);
+        else animator.SetFloat("Speed_f", 0f);
     }
 
 }
