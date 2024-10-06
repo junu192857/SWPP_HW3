@@ -33,22 +33,21 @@ public class LevelManager : MonoBehaviour
     {
         moneys = GameObject.FindGameObjectsWithTag("Money");
         gatePos = gate.transform.position;
-        Initialize(1);
+        Initialize(2, true);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) Initialize(curLevel);
+        if (Input.GetKeyDown(KeyCode.R)) Initialize(curLevel, true);
     }
 
-    public void Initialize(int level) {
+    public void Initialize(int level, bool setPlayerPos) {
         curLevel = level;
-        player.Initialize(level);
-
-        ResetLevel(level);
+        ResetLevel(level, setPlayerPos);
     }
 
-    private void ResetLevel(int level) {
+    public void ResetLevel(int level, bool spp) {
+        if (spp) player.Initialize(level);
         switch (level) {
             case 1:
                 money = 0;
@@ -61,10 +60,12 @@ public class LevelManager : MonoBehaviour
                 }
                 CloseGate();
                 break;
+            case 2:
+                um.CloseText();
+                break;
             default:
                 throw new NotImplementedException();
         }
-        ResetLevel(level + 1);
     }
 
     public void AddMoney(Vector3 moneyPos) {

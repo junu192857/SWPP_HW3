@@ -11,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
 
+
     private int Level => LevelManager.instance.curLevel;
 
     private bool rightMoveInit;
@@ -43,6 +44,8 @@ public class PlayerBehaviour : MonoBehaviour
                 transform.position = new Vector3(-16.85f, 0.5f, -19.8f);
                 break;
             case 2:
+                transform.position = new Vector3(47.68f, 1.5f, -19.8f);
+                break;
             case 3:
             case 4:
             default:
@@ -84,8 +87,15 @@ public class PlayerBehaviour : MonoBehaviour
             onGround = true;
             animator.SetBool("Jump_b", false);
         }
+        else if (collision.gameObject.CompareTag("Lava")) {
+            onGround = true;
+            animator.SetBool("Jump_b", false);
+            Die();
+        }
         
     }
+
+    private void Die() => LevelManager.instance.ResetLevel(Level, true);
 
     private void OnTriggerEnter(Collider other)
     {
@@ -96,7 +106,7 @@ public class PlayerBehaviour : MonoBehaviour
             money.SetActive(false);
         }
         else if (other.gameObject.CompareTag("MoveLevel")) {
-            LevelManager.instance.Initialize(Level + 1);
+            LevelManager.instance.Initialize(Level + 1, false);
         }
     }
 
@@ -104,7 +114,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (left && !right)
         {
             transform.rotation = lookLeft;
-            animator.SetFloat("Speed_f", 1f);
+
         }
         else if (right && !left) { 
             transform.rotation = lookRight;
@@ -114,10 +124,20 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     private void Move(bool left, bool right) {
-        
-        if (left && !right) transform.Translate(Vector3.left * moveSpeed * Time.deltaTime, Space.World);
-        else if (right && !left) transform.Translate(Vector3.right * moveSpeed * Time.deltaTime, Space.World);
-        else animator.SetFloat("Speed_f", 0f);
+
+        if (left && !right)
+        {
+            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime, Space.World);
+            animator.SetFloat("Speed_f", 1f);
+        }
+        else if (right && !left)
+        {
+            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime, Space.World);
+            animator.SetFloat("Speed_f", 1f);
+        }
+        else {
+            animator.SetFloat("Speed_f", 0f);
+        }
     }
 
 }

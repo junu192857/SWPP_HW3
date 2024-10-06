@@ -10,4 +10,5 @@ public class UIManager : MonoBehaviour
     public void UpdateMoney(int money, int maxMoney) {
         text.text = $"Money : {money} / {maxMoney}";
     }
+    public void CloseText() => text.gameObject.SetActive(false);
 }
