@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -30,12 +31,21 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     // Reset Maps and Character when restart game.
-    private void Initialize() {
+    public void Initialize(int level) {
         rightMove = false;
         leftMove = false;
 
         transform.rotation = lookRight;
-        transform.position = new Vector3(-16f, 0.5f, 20f);
+        switch (level) {
+            case 1:
+                transform.position = new Vector3(-16.85f, 0.5f, -19.8f);
+                break;
+            case 2:
+            case 3:
+            case 4:
+            default:
+                throw new NotImplementedException();
+        }
     }
 
 
@@ -50,11 +60,12 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)) leftMove = true;
         else leftMove = false;
 
-        Look(leftMoveInit, rightMoveInit);
         Move(leftMove, rightMove);
+        Look(leftMoveInit, rightMoveInit);
 
         rightMoveInit = false;
         leftMoveInit = false;
+        
     }
 
     private void Jump() {
@@ -77,11 +88,17 @@ public class PlayerBehaviour : MonoBehaviour
         if (left && !right)
         {
             transform.rotation = lookLeft;
+            animator.SetFloat("Speed_f", 1f);
         }
-        else if (right && !left) transform.rotation = lookRight;
+        else if (right && !left) { 
+            transform.rotation = lookRight;
+            animator.SetFloat("Speed_f", 1f);
+        }
+        else animator.SetFloat("Speed_f", 0f);
     }
 
     private void Move(bool left, bool right) {
+        
         if (left && !right) transform.Translate(Vector3.left * moveSpeed * Time.deltaTime, Space.World);
         else if (right && !left) transform.Translate(Vector3.right * moveSpeed * Time.deltaTime, Space.World);
     }
