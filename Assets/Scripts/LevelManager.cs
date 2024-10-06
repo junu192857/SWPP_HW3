@@ -13,12 +13,14 @@ public class LevelManager : MonoBehaviour
 
     // for Level 1
     public int money;
+    public GameObject gate;
+    public GameObject moneyParticle;
 
     public PlayerBehaviour player;
 
     private GameObject[] moneys;
 
-    private int level1MaxMoney = 24;
+    private int level1MaxMoney = 25;
 
     private void Awake()
     {
@@ -45,6 +47,9 @@ public class LevelManager : MonoBehaviour
                 money = 0;
                 foreach (GameObject money in moneys) {
                     money.SetActive(true);
+                    foreach (ParticleSystem particle in FindObjectsOfType<ParticleSystem>()) {
+                        Destroy(particle.gameObject);
+                    }
                 }
                 break;
             default:
@@ -53,9 +58,11 @@ public class LevelManager : MonoBehaviour
         ResetLevel(level + 1);
     }
 
-    public void AddMoney() {
+    public void AddMoney(Vector3 moneyPos) {
         money++;
         um.UpdateMoney(money, level1MaxMoney);
+        ParticleSystem ps = Instantiate(moneyParticle, moneyPos, Quaternion.identity).GetComponent<ParticleSystem>();
+        ps.Play();
 
         if (money == level1MaxMoney) {
             OpenGate();
@@ -65,4 +72,6 @@ public class LevelManager : MonoBehaviour
     private void OpenGate() { 
         
     }
+
+    private void CloseGate() { }
 }
