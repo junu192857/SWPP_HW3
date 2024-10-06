@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     // for Level 1
     public int money;
     public GameObject gate;
+    public Vector3 gatePos;
     public GameObject moneyParticle;
 
     public PlayerBehaviour player;
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         moneys = GameObject.FindGameObjectsWithTag("Money");
+        gatePos = gate.transform.position;
         Initialize(1);
     }
 
@@ -51,6 +53,7 @@ public class LevelManager : MonoBehaviour
                         Destroy(particle.gameObject);
                     }
                 }
+                CloseGate();
                 break;
             default:
                 throw new NotImplementedException();
@@ -69,9 +72,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void OpenGate() { 
-        
-    }
+    private void OpenGate() => gate.GetComponent<Animator>().SetBool("Open_Condition", true);
 
-    private void CloseGate() { }
+    private void CloseGate() {
+        gate.GetComponent<Animator>().SetBool("Open_Condition", false);
+        gate.transform.position = gatePos;
+    }
 }
