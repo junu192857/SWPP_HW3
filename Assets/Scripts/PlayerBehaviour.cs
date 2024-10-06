@@ -87,7 +87,8 @@ public class PlayerBehaviour : MonoBehaviour
             onGround = true;
             animator.SetBool("Jump_b", false);
         }
-        else if (collision.gameObject.CompareTag("Lava")) {
+        else if (collision.gameObject.CompareTag("Lava"))
+        {
             onGround = true;
             animator.SetBool("Jump_b", false);
             Die();
@@ -107,6 +108,11 @@ public class PlayerBehaviour : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("MoveLevel")) {
             LevelManager.instance.Initialize(Level + 1, false);
+        }
+        else if (other.gameObject.CompareTag("Bomb"))
+        {
+            Debug.Log("Explode!");
+            //TODO: Die
         }
     }
 

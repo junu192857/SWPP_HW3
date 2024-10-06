@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     public PlayerBehaviour player;
 
     private GameObject[] moneys;
+    private GameObject[] bombs;
 
     private int level1MaxMoney = 25;
 
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         moneys = GameObject.FindGameObjectsWithTag("Money");
+        bombs = GameObject.FindGameObjectsWithTag("Bomb");
         gatePos = gate.transform.position;
         Initialize(2, true);
     }
@@ -54,17 +56,21 @@ public class LevelManager : MonoBehaviour
                 um.UpdateMoney(money, level1MaxMoney);
                 foreach (GameObject money in moneys) {
                     money.SetActive(true);
-                    foreach (ParticleSystem particle in FindObjectsOfType<ParticleSystem>()) {
-                        Destroy(particle.gameObject);
-                    }
                 }
                 CloseGate();
                 break;
             case 2:
                 um.CloseText();
+                foreach (GameObject bomb in bombs) {
+                    bomb.SetActive(true);
+                }
                 break;
             default:
                 throw new NotImplementedException();
+        }
+        foreach (ParticleSystem particle in FindObjectsOfType<ParticleSystem>())
+        {
+            Destroy(particle.gameObject);
         }
     }
 
