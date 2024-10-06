@@ -82,6 +82,10 @@ public class PlayerBehaviour : MonoBehaviour
             onGround = true;
             animator.SetBool("Jump_b", false);
         }
+        else if (collision.gameObject.CompareTag("Money")) {
+            LevelManager.instance.AddMoney();
+            collision.gameObject.SetActive(false);
+        }
     }
 
     private void Look(bool left, bool right) {

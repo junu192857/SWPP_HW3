@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TextMeshProUGUI text;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void UpdateMoney(int money, int maxMoney) {
+        text.text = $"Money : {money} / {maxMoney}";
     }
 }
